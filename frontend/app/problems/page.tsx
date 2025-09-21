@@ -105,20 +105,20 @@ export default function ProblemsPage() {
 
   return (
     <Layout>
-      <div className="p-6">
-        <div className="mb-8">
-          <h1 className="text-3xl font-bold text-gray-900">Problem List</h1>
-          <p className="text-gray-600 mt-2">
+      <div className="p-4 sm:p-6">
+        <div className="mb-6 sm:mb-8">
+          <h1 className="text-2xl sm:text-3xl font-bold text-gray-900">Problem List</h1>
+          <p className="text-gray-600 mt-2 text-sm sm:text-base">
             Manage patient problems and medical terminology mappings.
           </p>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 sm:gap-6 mb-6 sm:mb-8">
           <div className="lg:col-span-2">
             <Card>
               <CardHeader>
-                <CardTitle className="flex items-center">
-                  <List className="mr-2 h-5 w-5" />
+                <CardTitle className="flex items-center text-lg sm:text-xl">
+                  <List className="mr-2 h-4 w-4 sm:h-5 sm:w-5" />
                   Current Problems
                 </CardTitle>
               </CardHeader>
@@ -142,11 +142,11 @@ export default function ProblemsPage() {
             </Card>
           </div>
 
-          <div className="space-y-6">
+          <div className="space-y-4 sm:space-y-6">
             <Card>
               <CardHeader>
-                <CardTitle className="flex items-center">
-                  <Plus className="mr-2 h-5 w-5" />
+                <CardTitle className="flex items-center text-lg sm:text-xl">
+                  <Plus className="mr-2 h-4 w-4 sm:h-5 sm:w-5" />
                   Add New Problem
                 </CardTitle>
               </CardHeader>
@@ -156,22 +156,22 @@ export default function ProblemsPage() {
                   placeholder="Search to add problem..."
                   className="w-full"
                 />
-                <p className="text-sm text-gray-500 mt-2">
+                <p className="text-xs sm:text-sm text-gray-500 mt-2">
                   Search for medical terms to add them to the problem list.
                 </p>
               </CardContent>
             </Card>
 
             {saveMessage && (
-              <div className="bg-green-50 border border-green-200 rounded-lg p-4">
+              <div className="bg-green-50 border border-green-200 rounded-lg p-3 sm:p-4">
                 <div className="flex items-center">
                   <div className="flex-shrink-0">
-                    <div className="w-5 h-5 bg-green-400 rounded-full flex items-center justify-center">
+                    <div className="w-4 h-4 sm:w-5 sm:h-5 bg-green-400 rounded-full flex items-center justify-center">
                       <span className="text-white text-xs">✓</span>
                     </div>
                   </div>
                   <div className="ml-3">
-                    <p className="text-sm font-medium text-green-800">
+                    <p className="text-xs sm:text-sm font-medium text-green-800">
                       {saveMessage}
                     </p>
                   </div>
@@ -181,26 +181,26 @@ export default function ProblemsPage() {
 
             <Card>
               <CardHeader>
-                <CardTitle className="flex items-center">
-                  <AlertCircle className="mr-2 h-5 w-5" />
+                <CardTitle className="flex items-center text-lg sm:text-xl">
+                  <AlertCircle className="mr-2 h-4 w-4 sm:h-5 sm:w-5" />
                   Quick Stats
                 </CardTitle>
               </CardHeader>
               <CardContent>
-                <div className="space-y-3">
+                <div className="space-y-2 sm:space-y-3">
                   <div className="flex justify-between">
-                    <span className="text-sm text-gray-600">Total Problems</span>
-                    <span className="font-medium">{problems.length}</span>
+                    <span className="text-xs sm:text-sm text-gray-600">Total Problems</span>
+                    <span className="font-medium text-xs sm:text-sm">{problems.length}</span>
                   </div>
                   <div className="flex justify-between">
-                    <span className="text-sm text-gray-600">NAMASTE Mapped</span>
-                    <span className="font-medium">
+                    <span className="text-xs sm:text-sm text-gray-600">NAMASTE Mapped</span>
+                    <span className="font-medium text-xs sm:text-sm">
                       {problems.filter(p => p.namasteCode).length}
                     </span>
                   </div>
                   <div className="flex justify-between">
-                    <span className="text-sm text-gray-600">ICD-11 Mapped</span>
-                    <span className="font-medium">
+                    <span className="text-xs sm:text-sm text-gray-600">ICD-11 Mapped</span>
+                    <span className="font-medium text-xs sm:text-sm">
                       {problems.filter(p => p.icd11Code).length}
                     </span>
                   </div>
@@ -210,13 +210,13 @@ export default function ProblemsPage() {
           </div>
         </div>
 
-        <div className="mt-8">
+        <div className="mt-6 sm:mt-8">
           <Card>
             <CardHeader>
-              <CardTitle>Problem List Management</CardTitle>
+              <CardTitle className="text-lg sm:text-xl">Problem List Management</CardTitle>
             </CardHeader>
             <CardContent>
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm">
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-xs sm:text-sm">
                 <div>
                   <h4 className="font-medium text-gray-900 mb-2">Adding Problems</h4>
                   <p className="text-gray-600">

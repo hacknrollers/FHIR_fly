@@ -63,20 +63,20 @@ export default function TerminologyPage() {
 
   return (
     <Layout>
-      <div className="p-6">
-        <div className="mb-8">
-          <h1 className="text-3xl font-bold text-gray-900">Terminology Search</h1>
-          <p className="text-gray-600 mt-2">
+      <div className="p-4 sm:p-6">
+        <div className="mb-6 sm:mb-8">
+          <h1 className="text-2xl sm:text-3xl font-bold text-gray-900">Terminology Search</h1>
+          <p className="text-gray-600 mt-2 text-sm sm:text-base">
             Search and map medical terminology using NAMASTE and ICD-11 codes.
           </p>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-          <div className="space-y-6">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6">
+          <div className="space-y-4 sm:space-y-6">
             <Card>
               <CardHeader>
-                <CardTitle className="flex items-center">
-                  <Search className="mr-2 h-5 w-5" />
+                <CardTitle className="flex items-center text-lg sm:text-xl">
+                  <Search className="mr-2 h-4 w-4 sm:h-5 sm:w-5" />
                   Search Terminology
                 </CardTitle>
               </CardHeader>
@@ -86,22 +86,22 @@ export default function TerminologyPage() {
                   placeholder="Search for medical terms (e.g., Jwara, Ajeerna)..."
                   className="w-full"
                 />
-                <p className="text-sm text-gray-500 mt-2">
+                <p className="text-xs sm:text-sm text-gray-500 mt-2">
                   Start typing to search for medical terminology. Results will show NAMASTE and ICD-11 mappings.
                 </p>
               </CardContent>
             </Card>
 
             {addSuccess && (
-              <div className="bg-green-50 border border-green-200 rounded-lg p-4">
+              <div className="bg-green-50 border border-green-200 rounded-lg p-3 sm:p-4">
                 <div className="flex items-center">
                   <div className="flex-shrink-0">
-                    <div className="w-5 h-5 bg-green-400 rounded-full flex items-center justify-center">
+                    <div className="w-4 h-4 sm:w-5 sm:h-5 bg-green-400 rounded-full flex items-center justify-center">
                       <span className="text-white text-xs">✓</span>
                     </div>
                   </div>
                   <div className="ml-3">
-                    <p className="text-sm font-medium text-green-800">
+                    <p className="text-xs sm:text-sm font-medium text-green-800">
                       Successfully added to problem list!
                     </p>
                   </div>
@@ -114,36 +114,36 @@ export default function TerminologyPage() {
             {selectedTerm ? (
               <Card>
                 <CardHeader>
-                  <CardTitle className="flex items-center">
-                    <BookOpen className="mr-2 h-5 w-5" />
+                  <CardTitle className="flex items-center text-lg sm:text-xl">
+                    <BookOpen className="mr-2 h-4 w-4 sm:h-5 sm:w-5" />
                     Selected Term
                   </CardTitle>
                 </CardHeader>
                 <CardContent>
-                  <div className="space-y-4">
+                  <div className="space-y-3 sm:space-y-4">
                     <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-1">
+                      <label className="block text-xs sm:text-sm font-medium text-gray-700 mb-1">
                         Term Name
                       </label>
-                      <div className="p-3 bg-gray-50 rounded-md font-medium">
+                      <div className="p-2 sm:p-3 bg-gray-50 rounded-md font-medium text-sm sm:text-base">
                         {selectedTerm.termName}
                       </div>
                     </div>
 
-                    <div className="grid grid-cols-2 gap-4">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
                       <div>
-                        <label className="block text-sm font-medium text-gray-700 mb-1">
+                        <label className="block text-xs sm:text-sm font-medium text-gray-700 mb-1">
                           NAMASTE Code
                         </label>
-                        <div className="p-3 bg-gray-50 rounded-md font-mono text-sm">
+                        <div className="p-2 sm:p-3 bg-gray-50 rounded-md font-mono text-xs sm:text-sm">
                           {selectedTerm.namasteCode}
                         </div>
                       </div>
                       <div>
-                        <label className="block text-sm font-medium text-gray-700 mb-1">
+                        <label className="block text-xs sm:text-sm font-medium text-gray-700 mb-1">
                           ICD-11 Code
                         </label>
-                        <div className="p-3 bg-gray-50 rounded-md font-mono text-sm">
+                        <div className="p-2 sm:p-3 bg-gray-50 rounded-md font-mono text-xs sm:text-sm">
                           {selectedTerm.icd11Code}
                         </div>
                       </div>
@@ -151,10 +151,10 @@ export default function TerminologyPage() {
 
                     {selectedTerm.description && (
                       <div>
-                        <label className="block text-sm font-medium text-gray-700 mb-1">
+                        <label className="block text-xs sm:text-sm font-medium text-gray-700 mb-1">
                           Description
                         </label>
-                        <div className="p-3 bg-gray-50 rounded-md text-sm">
+                        <div className="p-2 sm:p-3 bg-gray-50 rounded-md text-xs sm:text-sm">
                           {selectedTerm.description}
                         </div>
                       </div>
@@ -163,9 +163,9 @@ export default function TerminologyPage() {
                     <Button
                       onClick={handleAddToProblemList}
                       disabled={isAdding}
-                      className="w-full"
+                      className="w-full text-sm sm:text-base"
                     >
-                      <Plus className="mr-2 h-4 w-4" />
+                      <Plus className="mr-2 h-3 w-3 sm:h-4 sm:w-4" />
                       {isAdding ? 'Adding...' : 'Add to Problem List'}
                     </Button>
                   </div>
@@ -174,12 +174,12 @@ export default function TerminologyPage() {
             ) : (
               <Card>
                 <CardHeader>
-                  <CardTitle>No Term Selected</CardTitle>
+                  <CardTitle className="text-lg sm:text-xl">No Term Selected</CardTitle>
                 </CardHeader>
                 <CardContent>
-                  <div className="text-center py-8 text-gray-500">
-                    <BookOpen className="mx-auto h-12 w-12 text-gray-300 mb-4" />
-                    <p>Search for a term to view its details and add it to your problem list.</p>
+                  <div className="text-center py-6 sm:py-8 text-gray-500">
+                    <BookOpen className="mx-auto h-8 w-8 sm:h-12 sm:w-12 text-gray-300 mb-3 sm:mb-4" />
+                    <p className="text-sm sm:text-base">Search for a term to view its details and add it to your problem list.</p>
                   </div>
                 </CardContent>
               </Card>
@@ -187,13 +187,13 @@ export default function TerminologyPage() {
           </div>
         </div>
 
-        <div className="mt-8">
+        <div className="mt-6 sm:mt-8">
           <Card>
             <CardHeader>
-              <CardTitle>Search Tips</CardTitle>
+              <CardTitle className="text-lg sm:text-xl">Search Tips</CardTitle>
             </CardHeader>
             <CardContent>
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm">
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-xs sm:text-sm">
                 <div>
                   <h4 className="font-medium text-gray-900 mb-2">Search by Term</h4>
                   <p className="text-gray-600">
