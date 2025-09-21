@@ -165,8 +165,12 @@ export function ProblemTable({
 
               {/* Mobile Card View */}
               <div className="lg:hidden space-y-3">
-                {problems.map((problem) => (
-                  <div key={problem.id} className="border border-gray-200 rounded-lg p-3 sm:p-4 bg-white">
+                {problems.map((problem, index) => (
+                  <div 
+                    key={problem.id} 
+                    className="border border-gray-200 rounded-lg p-3 sm:p-4 bg-white card-hover hover-lift animate-slide-up"
+                    style={{ animationDelay: `${index * 0.1}s` }}
+                  >
                     <div className="space-y-2">
                       <div className="flex justify-between items-start">
                         <h3 className="font-medium text-sm sm:text-base text-gray-900 truncate">
@@ -174,11 +178,11 @@ export function ProblemTable({
                             <Input
                               value={editValues.termName || ''}
                               onChange={(e) => handleInputChange('termName', e.target.value)}
-                              className="w-full text-sm"
+                              className="w-full text-sm hover-scale"
                               placeholder="Term Name"
                             />
                           ) : (
-                            problem.termName
+                            <span className="gradient-text">{problem.termName}</span>
                           )}
                         </h3>
                         <div className="flex space-x-1 ml-2">
@@ -187,7 +191,7 @@ export function ProblemTable({
                               <Button
                                 size="sm"
                                 onClick={() => handleSave(problem.id)}
-                                className="h-7 px-2 text-xs"
+                                className="h-7 px-2 text-xs btn-animate hover-scale"
                               >
                                 <Save className="h-3 w-3" />
                               </Button>
@@ -195,7 +199,7 @@ export function ProblemTable({
                                 size="sm"
                                 variant="outline"
                                 onClick={handleCancel}
-                                className="h-7 px-2 text-xs"
+                                className="h-7 px-2 text-xs btn-animate hover-scale"
                               >
                                 Cancel
                               </Button>
@@ -206,7 +210,7 @@ export function ProblemTable({
                                 size="sm"
                                 variant="outline"
                                 onClick={() => handleEdit(problem)}
-                                className="h-7 px-2 text-xs"
+                                className="h-7 px-2 text-xs btn-animate hover-scale"
                               >
                                 Edit
                               </Button>
@@ -214,7 +218,7 @@ export function ProblemTable({
                                 size="sm"
                                 variant="destructive"
                                 onClick={() => onRemove(problem.id)}
-                                className="h-7 px-2"
+                                className="h-7 px-2 btn-animate hover-scale"
                               >
                                 <Trash2 className="h-3 w-3" />
                               </Button>
@@ -224,35 +228,35 @@ export function ProblemTable({
                       </div>
                       
                       <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs sm:text-sm">
-                        <div>
+                        <div className="animate-fade-in">
                           <span className="text-gray-500">NAMASTE:</span>
                           {editingId === problem.id ? (
                             <Input
                               value={editValues.namasteCode || ''}
                               onChange={(e) => handleInputChange('namasteCode', e.target.value)}
-                              className="w-full text-xs mt-1"
+                              className="w-full text-xs mt-1 hover-scale"
                               placeholder="NAMASTE Code"
                             />
                           ) : (
-                            <span className="ml-1 font-mono">{problem.namasteCode}</span>
+                            <span className="ml-1 font-mono text-blue-600">{problem.namasteCode}</span>
                           )}
                         </div>
-                        <div>
+                        <div className="animate-fade-in" style={{ animationDelay: '0.1s' }}>
                           <span className="text-gray-500">ICD-11:</span>
                           {editingId === problem.id ? (
                             <Input
                               value={editValues.icd11Code || ''}
                               onChange={(e) => handleInputChange('icd11Code', e.target.value)}
-                              className="w-full text-xs mt-1"
+                              className="w-full text-xs mt-1 hover-scale"
                               placeholder="ICD-11 Code"
                             />
                           ) : (
-                            <span className="ml-1 font-mono">{problem.icd11Code}</span>
+                            <span className="ml-1 font-mono text-purple-600">{problem.icd11Code}</span>
                           )}
                         </div>
                       </div>
                       
-                      <div className="text-xs text-gray-500">
+                      <div className="text-xs text-gray-500 animate-fade-in" style={{ animationDelay: '0.2s' }}>
                         Added: {new Date(problem.addedAt).toLocaleDateString()}
                       </div>
                     </div>

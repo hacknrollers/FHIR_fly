@@ -63,19 +63,21 @@ export default function TerminologyPage() {
 
   return (
     <Layout>
-      <div className="p-4 sm:p-6">
-        <div className="mb-6 sm:mb-8">
-          <h1 className="text-2xl sm:text-3xl font-bold text-gray-900">Terminology Search</h1>
-          <p className="text-gray-600 mt-2 text-sm sm:text-base">
+      <div className="p-4 sm:p-6 particle-bg">
+        <div className="mb-6 sm:mb-8 animate-fade-in">
+          <h1 className="text-2xl sm:text-3xl font-bold text-slate-900 animate-slide-up">
+            Terminology Search
+          </h1>
+          <p className="text-slate-900 mt-2 text-sm sm:text-base font-medium animate-slide-up" style={{ animationDelay: '0.1s' }}>
             Search and map medical terminology using NAMASTE and ICD-11 codes.
           </p>
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6">
           <div className="space-y-4 sm:space-y-6">
-            <Card>
+            <Card className="card-hover hover-lift border-slate-200 animate-slide-in-left">
               <CardHeader>
-                <CardTitle className="flex items-center text-lg sm:text-xl">
+                <CardTitle className="flex items-center text-lg sm:text-xl text-slate-800">
                   <Search className="mr-2 h-4 w-4 sm:h-5 sm:w-5" />
                   Search Terminology
                 </CardTitle>
@@ -112,9 +114,9 @@ export default function TerminologyPage() {
 
           <div>
             {selectedTerm ? (
-              <Card>
+              <Card className="card-hover hover-lift border-slate-200 animate-slide-in-right">
                 <CardHeader>
-                  <CardTitle className="flex items-center text-lg sm:text-xl">
+                  <CardTitle className="flex items-center text-lg sm:text-xl text-slate-800">
                     <BookOpen className="mr-2 h-4 w-4 sm:h-5 sm:w-5" />
                     Selected Term
                   </CardTitle>
@@ -172,9 +174,9 @@ export default function TerminologyPage() {
                 </CardContent>
               </Card>
             ) : (
-              <Card>
+              <Card className="card-hover hover-lift border-slate-200 animate-slide-in-right">
                 <CardHeader>
-                  <CardTitle className="text-lg sm:text-xl">No Term Selected</CardTitle>
+                  <CardTitle className="text-lg sm:text-xl text-slate-800">No Term Selected</CardTitle>
                 </CardHeader>
                 <CardContent>
                   <div className="text-center py-6 sm:py-8 text-gray-500">
@@ -188,9 +190,9 @@ export default function TerminologyPage() {
         </div>
 
         <div className="mt-6 sm:mt-8">
-          <Card>
+          <Card className="card-hover hover-lift border-slate-200 animate-fade-in">
             <CardHeader>
-              <CardTitle className="text-lg sm:text-xl">Search Tips</CardTitle>
+              <CardTitle className="text-lg sm:text-xl text-slate-800">Search Tips</CardTitle>
             </CardHeader>
             <CardContent>
               <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-xs sm:text-sm">

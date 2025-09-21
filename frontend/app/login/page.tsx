@@ -55,38 +55,38 @@ export default function LoginPage() {
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-50 py-8 px-4 sm:py-12 sm:px-6 lg:px-8">
-      <div className="max-w-md w-full space-y-6 sm:space-y-8">
-        <div className="text-center">
-          <div className="mx-auto h-10 w-10 sm:h-12 sm:w-12 bg-blue-600 rounded-full flex items-center justify-center">
-            <User className="h-5 w-5 sm:h-6 sm:w-6 text-white" />
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-white via-slate-50 to-blue-50 py-8 px-4 sm:py-12 sm:px-6 lg:px-8">
+      <div className="max-w-md w-full space-y-6 sm:space-y-8 animate-fade-in">
+        <div className="text-center animate-fade-in">
+          <div className="mx-auto h-12 w-12 sm:h-16 sm:w-16 bg-gradient-to-r from-blue-600 to-indigo-600 rounded-full flex items-center justify-center shadow-lg animate-scale-in">
+            <User className="h-6 w-6 sm:h-8 sm:w-8 text-white" />
           </div>
-          <h2 className="mt-4 sm:mt-6 text-2xl sm:text-3xl font-extrabold text-gray-900">
+          <h2 className="mt-4 sm:mt-6 text-2xl sm:text-3xl font-extrabold text-slate-800 animate-slide-up">
             FHIR-fly
           </h2>
-          <p className="mt-2 text-xs sm:text-sm text-gray-600">
+          <p className="mt-2 text-sm text-slate-600 animate-slide-up" style={{ animationDelay: '0.1s' }}>
             Sign in with your ABHA ID
           </p>
         </div>
 
-        <Card>
+        <Card className="shadow-xl border-0 bg-white/95 backdrop-blur-sm card-hover hover-lift animate-slide-up" style={{ animationDelay: '0.2s' }}>
           <CardHeader className="pb-4 sm:pb-6">
-            <CardTitle className="text-lg sm:text-xl">ABHA Login</CardTitle>
-            <CardDescription className="text-xs sm:text-sm">
+            <CardTitle className="text-lg sm:text-xl text-slate-800 animate-fade-in">ABHA Login</CardTitle>
+            <CardDescription className="text-sm text-slate-600 animate-fade-in" style={{ animationDelay: '0.1s' }}>
               Enter your ABHA ID to access the FHIR terminology system
             </CardDescription>
           </CardHeader>
           <CardContent>
             <form onSubmit={handleSubmit} className="space-y-4 sm:space-y-6">
               {error && (
-                <div className="flex items-center space-x-2 text-red-600 bg-red-50 p-2 sm:p-3 rounded-md">
-                  <AlertCircle className="h-3 w-3 sm:h-4 sm:w-4 flex-shrink-0" />
-                  <span className="text-xs sm:text-sm">{error}</span>
+                <div className="flex items-center space-x-2 text-red-600 bg-red-50 p-3 rounded-md">
+                  <AlertCircle className="h-4 w-4 flex-shrink-0" />
+                  <span className="text-sm">{error}</span>
                 </div>
               )}
 
               <div>
-                <label htmlFor="abhaId" className="block text-xs sm:text-sm font-medium text-gray-700">
+                <label htmlFor="abhaId" className="block text-sm font-medium text-slate-700">
                   ABHA ID
                 </label>
                 <Input
@@ -99,25 +99,32 @@ export default function LoginPage() {
                   className="mt-1 text-sm sm:text-base"
                   disabled={isLoading}
                 />
-                <p className="mt-1 text-xs text-gray-500">
+                <p className="mt-1 text-xs text-slate-500">
                   Enter a valid ABHA ID (minimum 10 characters)
                 </p>
               </div>
 
-              <Button
-                type="submit"
-                className="w-full text-sm sm:text-base"
-                disabled={isLoading || abhaId.length < 10}
-              >
-                {isLoading ? 'Signing in...' : 'Login'}
+                  <Button
+                    type="submit"
+                    className="w-full text-sm sm:text-base hover-scale"
+                    disabled={isLoading || abhaId.length < 10}
+                  >
+                {isLoading ? (
+                  <span className="flex items-center justify-center">
+                    <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white mr-2"></div>
+                    Signing in...
+                  </span>
+                ) : (
+                  'Login'
+                )}
               </Button>
             </form>
 
-            <div className="mt-4 sm:mt-6 text-center">
-              <p className="text-xs text-gray-500">
-                Demo: Use any ABHA ID with 10+ characters
-              </p>
-            </div>
+                <div className="mt-4 sm:mt-6 text-center animate-fade-in" style={{ animationDelay: '0.3s' }}>
+                  <p className="text-xs text-slate-500">
+                    Demo: Use any ABHA ID with 10+ characters
+                  </p>
+                </div>
           </CardContent>
         </Card>
       </div>

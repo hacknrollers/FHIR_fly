@@ -105,19 +105,21 @@ export default function ProblemsPage() {
 
   return (
     <Layout>
-      <div className="p-4 sm:p-6">
-        <div className="mb-6 sm:mb-8">
-          <h1 className="text-2xl sm:text-3xl font-bold text-gray-900">Problem List</h1>
-          <p className="text-gray-600 mt-2 text-sm sm:text-base">
+      <div className="p-4 sm:p-6 particle-bg">
+        <div className="mb-6 sm:mb-8 animate-fade-in">
+          <h1 className="text-2xl sm:text-3xl font-bold text-slate-900 animate-slide-up">
+            Problem List
+          </h1>
+          <p className="text-slate-900 mt-2 text-sm sm:text-base font-medium animate-slide-up" style={{ animationDelay: '0.1s' }}>
             Manage patient problems and medical terminology mappings.
           </p>
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 sm:gap-6 mb-6 sm:mb-8">
           <div className="lg:col-span-2">
-            <Card>
+            <Card className="card-hover hover-lift border-slate-200 animate-slide-in-left">
               <CardHeader>
-                <CardTitle className="flex items-center text-lg sm:text-xl">
+                <CardTitle className="flex items-center text-lg sm:text-xl text-slate-800">
                   <List className="mr-2 h-4 w-4 sm:h-5 sm:w-5" />
                   Current Problems
                 </CardTitle>
@@ -143,9 +145,9 @@ export default function ProblemsPage() {
           </div>
 
           <div className="space-y-4 sm:space-y-6">
-            <Card>
+            <Card className="card-hover hover-lift border-slate-200 animate-slide-in-right">
               <CardHeader>
-                <CardTitle className="flex items-center text-lg sm:text-xl">
+                <CardTitle className="flex items-center text-lg sm:text-xl text-slate-800">
                   <Plus className="mr-2 h-4 w-4 sm:h-5 sm:w-5" />
                   Add New Problem
                 </CardTitle>
@@ -179,9 +181,9 @@ export default function ProblemsPage() {
               </div>
             )}
 
-            <Card>
+            <Card className="card-hover hover-lift border-slate-200 animate-slide-in-right" style={{ animationDelay: '0.2s' }}>
               <CardHeader>
-                <CardTitle className="flex items-center text-lg sm:text-xl">
+                <CardTitle className="flex items-center text-lg sm:text-xl text-slate-800">
                   <AlertCircle className="mr-2 h-4 w-4 sm:h-5 sm:w-5" />
                   Quick Stats
                 </CardTitle>

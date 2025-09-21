@@ -27,14 +27,14 @@ export function Sidebar({ onClose }: SidebarProps) {
   const pathname = usePathname();
 
   return (
-    <div className="flex h-full w-64 flex-col bg-slate-50 border-r border-slate-200">
+    <div className="flex h-full w-64 flex-col bg-slate-50/95 backdrop-blur-sm border-r border-slate-200">
       <div className="flex h-16 items-center justify-between px-6 border-b border-slate-200">
         <h1 className="text-xl font-bold text-slate-800">FHIR-fly</h1>
         {/* Close button for mobile */}
         <Button
           variant="ghost"
           size="icon"
-          className="lg:hidden"
+          className="lg:hidden hover-scale"
           onClick={onClose}
         >
           <X className="h-5 w-5" />
@@ -42,7 +42,7 @@ export function Sidebar({ onClose }: SidebarProps) {
       </div>
       
       <nav className="flex-1 space-y-1 px-3 py-4">
-        {navigation.map((item) => {
+        {navigation.map((item, index) => {
           const isActive = pathname === item.href;
           return (
             <Link
@@ -50,7 +50,7 @@ export function Sidebar({ onClose }: SidebarProps) {
               href={item.href}
               onClick={onClose} // Close sidebar when navigating on mobile
               className={cn(
-                'group flex items-center px-3 py-2.5 text-sm font-medium rounded-lg transition-all duration-200',
+                'group flex items-center px-3 py-2.5 text-sm font-medium rounded-lg transition-all duration-200 hover-scale',
                 isActive
                   ? 'bg-blue-50 text-blue-700 border border-blue-200 shadow-sm'
                   : 'text-slate-600 hover:bg-slate-100 hover:text-slate-800'
@@ -58,12 +58,14 @@ export function Sidebar({ onClose }: SidebarProps) {
             >
               <item.icon
                 className={cn(
-                  'mr-3 h-5 w-5 flex-shrink-0',
-                  isActive ? 'text-blue-600' : 'text-slate-500 group-hover:text-slate-700'
+                  'mr-3 h-5 w-5 flex-shrink-0 transition-all duration-200',
+                  isActive 
+                    ? 'text-blue-600' 
+                    : 'text-slate-500 group-hover:text-slate-700'
                 )}
                 aria-hidden="true"
               />
-              {item.name}
+              <span>{item.name}</span>
             </Link>
           );
         })}
