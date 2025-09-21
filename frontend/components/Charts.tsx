@@ -14,11 +14,11 @@ export function Charts({ data, isLoading = false }: ChartsProps) {
     return (
       <Card>
         <CardHeader>
-          <CardTitle>Analytics</CardTitle>
+          <CardTitle className="text-lg sm:text-xl">Analytics</CardTitle>
         </CardHeader>
         <CardContent>
-          <div className="h-80 flex items-center justify-center">
-            <div className="text-gray-500">Loading analytics data...</div>
+          <div className="h-60 sm:h-80 flex items-center justify-center">
+            <div className="text-gray-500 text-sm sm:text-base">Loading analytics data...</div>
           </div>
         </CardContent>
       </Card>
@@ -28,29 +28,34 @@ export function Charts({ data, isLoading = false }: ChartsProps) {
   return (
     <Card>
       <CardHeader>
-        <CardTitle>Terminology Usage Analytics</CardTitle>
+        <CardTitle className="text-lg sm:text-xl">Terminology Usage Analytics</CardTitle>
       </CardHeader>
       <CardContent>
-        <div className="h-80">
+        <div className="h-60 sm:h-80">
           <ResponsiveContainer width="100%" height="100%">
-            <BarChart data={data} margin={{ top: 20, right: 30, left: 20, bottom: 5 }}>
+            <BarChart data={data} margin={{ top: 20, right: 10, left: 10, bottom: 5 }}>
               <CartesianGrid strokeDasharray="3 3" />
               <XAxis 
                 dataKey="term" 
                 angle={-45}
                 textAnchor="end"
-                height={80}
-                fontSize={12}
+                height={60}
+                fontSize={10}
+                interval={0}
               />
-              <YAxis />
+              <YAxis fontSize={10} />
               <Tooltip 
                 formatter={(value: number) => [value, 'Count']}
                 labelFormatter={(label: string) => `Term: ${label}`}
+                contentStyle={{
+                  fontSize: '12px',
+                  padding: '8px'
+                }}
               />
               <Bar 
                 dataKey="count" 
                 fill="#3b82f6" 
-                radius={[4, 4, 0, 0]}
+                radius={[2, 2, 0, 0]}
               />
             </BarChart>
           </ResponsiveContainer>

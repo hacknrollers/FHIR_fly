@@ -7,8 +7,10 @@ import {
   LayoutDashboard, 
   Search, 
   List, 
-  BarChart3
+  BarChart3,
+  X
 } from 'lucide-react';
+import { Button } from '@/components/ui/button';
 
 const navigation = [
   { name: 'Dashboard', href: '/dashboard', icon: LayoutDashboard },
@@ -17,13 +19,26 @@ const navigation = [
   { name: 'Analytics', href: '/analytics', icon: BarChart3 },
 ];
 
-export function Sidebar() {
+interface SidebarProps {
+  onClose?: () => void;
+}
+
+export function Sidebar({ onClose }: SidebarProps) {
   const pathname = usePathname();
 
   return (
     <div className="flex h-full w-64 flex-col bg-slate-50 border-r border-slate-200">
-      <div className="flex h-16 items-center px-6 border-b border-slate-200">
+      <div className="flex h-16 items-center justify-between px-6 border-b border-slate-200">
         <h1 className="text-xl font-bold text-slate-800">FHIR-fly</h1>
+        {/* Close button for mobile */}
+        <Button
+          variant="ghost"
+          size="icon"
+          className="lg:hidden"
+          onClick={onClose}
+        >
+          <X className="h-5 w-5" />
+        </Button>
       </div>
       
       <nav className="flex-1 space-y-1 px-3 py-4">
@@ -33,6 +48,7 @@ export function Sidebar() {
             <Link
               key={item.name}
               href={item.href}
+              onClick={onClose} // Close sidebar when navigating on mobile
               className={cn(
                 'group flex items-center px-3 py-2.5 text-sm font-medium rounded-lg transition-all duration-200',
                 isActive

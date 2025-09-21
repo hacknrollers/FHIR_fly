@@ -55,38 +55,38 @@ export default function LoginPage() {
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
-      <div className="max-w-md w-full space-y-8">
+    <div className="min-h-screen flex items-center justify-center bg-gray-50 py-8 px-4 sm:py-12 sm:px-6 lg:px-8">
+      <div className="max-w-md w-full space-y-6 sm:space-y-8">
         <div className="text-center">
-          <div className="mx-auto h-12 w-12 bg-blue-600 rounded-full flex items-center justify-center">
-            <User className="h-6 w-6 text-white" />
+          <div className="mx-auto h-10 w-10 sm:h-12 sm:w-12 bg-blue-600 rounded-full flex items-center justify-center">
+            <User className="h-5 w-5 sm:h-6 sm:w-6 text-white" />
           </div>
-          <h2 className="mt-6 text-3xl font-extrabold text-gray-900">
+          <h2 className="mt-4 sm:mt-6 text-2xl sm:text-3xl font-extrabold text-gray-900">
             FHIR-fly
           </h2>
-          <p className="mt-2 text-sm text-gray-600">
+          <p className="mt-2 text-xs sm:text-sm text-gray-600">
             Sign in with your ABHA ID
           </p>
         </div>
 
         <Card>
-          <CardHeader>
-            <CardTitle>ABHA Login</CardTitle>
-            <CardDescription>
+          <CardHeader className="pb-4 sm:pb-6">
+            <CardTitle className="text-lg sm:text-xl">ABHA Login</CardTitle>
+            <CardDescription className="text-xs sm:text-sm">
               Enter your ABHA ID to access the FHIR terminology system
             </CardDescription>
           </CardHeader>
           <CardContent>
-            <form onSubmit={handleSubmit} className="space-y-6">
+            <form onSubmit={handleSubmit} className="space-y-4 sm:space-y-6">
               {error && (
-                <div className="flex items-center space-x-2 text-red-600 bg-red-50 p-3 rounded-md">
-                  <AlertCircle className="h-4 w-4" />
-                  <span className="text-sm">{error}</span>
+                <div className="flex items-center space-x-2 text-red-600 bg-red-50 p-2 sm:p-3 rounded-md">
+                  <AlertCircle className="h-3 w-3 sm:h-4 sm:w-4 flex-shrink-0" />
+                  <span className="text-xs sm:text-sm">{error}</span>
                 </div>
               )}
 
               <div>
-                <label htmlFor="abhaId" className="block text-sm font-medium text-gray-700">
+                <label htmlFor="abhaId" className="block text-xs sm:text-sm font-medium text-gray-700">
                   ABHA ID
                 </label>
                 <Input
@@ -96,7 +96,7 @@ export default function LoginPage() {
                   value={abhaId}
                   onChange={(e) => setAbhaId(e.target.value)}
                   placeholder="Enter your ABHA ID"
-                  className="mt-1"
+                  className="mt-1 text-sm sm:text-base"
                   disabled={isLoading}
                 />
                 <p className="mt-1 text-xs text-gray-500">
@@ -106,14 +106,14 @@ export default function LoginPage() {
 
               <Button
                 type="submit"
-                className="w-full"
+                className="w-full text-sm sm:text-base"
                 disabled={isLoading || abhaId.length < 10}
               >
                 {isLoading ? 'Signing in...' : 'Login'}
               </Button>
             </form>
 
-            <div className="mt-6 text-center">
+            <div className="mt-4 sm:mt-6 text-center">
               <p className="text-xs text-gray-500">
                 Demo: Use any ABHA ID with 10+ characters
               </p>

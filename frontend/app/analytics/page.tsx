@@ -92,27 +92,27 @@ export default function AnalyticsPage() {
 
   return (
     <Layout>
-      <div className="p-6">
-        <div className="mb-8">
-          <h1 className="text-3xl font-bold text-gray-900">Analytics</h1>
-          <p className="text-gray-600 mt-2">
+      <div className="p-4 sm:p-6">
+        <div className="mb-6 sm:mb-8">
+          <h1 className="text-2xl sm:text-3xl font-bold text-gray-900">Analytics</h1>
+          <p className="text-gray-600 mt-2 text-sm sm:text-base">
             Analyze terminology usage patterns and system performance.
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 mb-6 sm:mb-8">
           {summaryCards.map((card, index) => (
             <Card key={index} className="hover:shadow-lg transition-shadow">
               <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                <CardTitle className="text-sm font-medium text-gray-600">
+                <CardTitle className="text-xs sm:text-sm font-medium text-gray-600">
                   {card.title}
                 </CardTitle>
-                <div className={`p-2 rounded-full ${card.bgColor}`}>
-                  <card.icon className={`h-4 w-4 ${card.color}`} />
+                <div className={`p-1.5 sm:p-2 rounded-full ${card.bgColor}`}>
+                  <card.icon className={`h-3 w-3 sm:h-4 sm:w-4 ${card.color}`} />
                 </div>
               </CardHeader>
               <CardContent>
-                <div className="text-2xl font-bold">
+                <div className="text-lg sm:text-2xl font-bold">
                   {typeof card.value === 'number' ? card.value.toLocaleString() : card.value}
                 </div>
                 <p className="text-xs text-gray-500 mt-1">
@@ -123,33 +123,33 @@ export default function AnalyticsPage() {
           ))}
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6 mb-6 sm:mb-8">
           <Charts data={analyticsData} isLoading={isLoading} />
           
           <Card>
             <CardHeader>
-              <CardTitle>Top Terms</CardTitle>
+              <CardTitle className="text-lg sm:text-xl">Top Terms</CardTitle>
             </CardHeader>
             <CardContent>
               {isLoading ? (
-                <div className="text-center py-8">
+                <div className="text-center py-6 sm:py-8">
                   <div className="animate-spin rounded-full h-6 w-6 border-b-2 border-blue-600 mx-auto"></div>
-                  <p className="mt-2 text-gray-600">Loading...</p>
+                  <p className="mt-2 text-gray-600 text-sm">Loading...</p>
                 </div>
               ) : (
-                <div className="space-y-3">
+                <div className="space-y-2 sm:space-y-3">
                   {analyticsData
                     .sort((a, b) => b.count - a.count)
                     .slice(0, 5)
                     .map((item, index) => (
                       <div key={item.term} className="flex items-center justify-between">
                         <div className="flex items-center">
-                          <div className="w-6 h-6 bg-blue-100 text-blue-600 rounded-full flex items-center justify-center text-xs font-medium mr-3">
+                          <div className="w-5 h-5 sm:w-6 sm:h-6 bg-blue-100 text-blue-600 rounded-full flex items-center justify-center text-xs font-medium mr-2 sm:mr-3">
                             {index + 1}
                           </div>
-                          <span className="font-medium">{item.term}</span>
+                          <span className="font-medium text-sm sm:text-base truncate">{item.term}</span>
                         </div>
-                        <div className="text-sm text-gray-600">{item.count} uses</div>
+                        <div className="text-xs sm:text-sm text-gray-600">{item.count} uses</div>
                       </div>
                     ))}
                 </div>
@@ -158,16 +158,16 @@ export default function AnalyticsPage() {
           </Card>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6">
           <Card>
             <CardHeader>
-              <CardTitle>Usage Distribution</CardTitle>
+              <CardTitle className="text-lg sm:text-xl">Usage Distribution</CardTitle>
             </CardHeader>
             <CardContent>
               {isLoading ? (
-                <div className="text-center py-8">
+                <div className="text-center py-6 sm:py-8">
                   <div className="animate-spin rounded-full h-6 w-6 border-b-2 border-blue-600 mx-auto"></div>
-                  <p className="mt-2 text-gray-600">Loading...</p>
+                  <p className="mt-2 text-gray-600 text-sm">Loading...</p>
                 </div>
               ) : (
                 <div className="space-y-2">
@@ -175,13 +175,13 @@ export default function AnalyticsPage() {
                     const percentage = totalUsage > 0 ? (item.count / totalUsage) * 100 : 0;
                     return (
                       <div key={item.term} className="space-y-1">
-                        <div className="flex justify-between text-sm">
-                          <span className="font-medium">{item.term}</span>
+                        <div className="flex justify-between text-xs sm:text-sm">
+                          <span className="font-medium truncate">{item.term}</span>
                           <span className="text-gray-600">{item.count}</span>
                         </div>
-                        <div className="w-full bg-gray-200 rounded-full h-2">
+                        <div className="w-full bg-gray-200 rounded-full h-1.5 sm:h-2">
                           <div
-                            className="bg-blue-600 h-2 rounded-full transition-all duration-300"
+                            className="bg-blue-600 h-1.5 sm:h-2 rounded-full transition-all duration-300"
                             style={{ width: `${percentage}%` }}
                           ></div>
                         </div>
@@ -195,10 +195,10 @@ export default function AnalyticsPage() {
 
           <Card>
             <CardHeader>
-              <CardTitle>Data Insights</CardTitle>
+              <CardTitle className="text-lg sm:text-xl">Data Insights</CardTitle>
             </CardHeader>
             <CardContent>
-              <div className="space-y-4 text-sm">
+              <div className="space-y-3 sm:space-y-4 text-xs sm:text-sm">
                 <div>
                   <h4 className="font-medium text-gray-900 mb-2">Most Active Term</h4>
                   <p className="text-gray-600">
