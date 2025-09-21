@@ -95,17 +95,23 @@ export default function DashboardPage() {
 
   return (
     <Layout>
-      <div className="p-4 sm:p-6 lg:p-8">
-        <div className="mb-6 sm:mb-8">
-          <h1 className="text-2xl sm:text-3xl font-bold text-slate-800">Dashboard</h1>
-          <p className="text-slate-600 mt-2 text-sm sm:text-base">
+      <div className="p-4 sm:p-6 lg:p-8 particle-bg">
+        <div className="mb-6 sm:mb-8 animate-fade-in">
+          <h1 className="text-2xl sm:text-3xl font-bold text-slate-900">
+            Dashboard
+          </h1>
+          <p className="text-slate-900 mt-2 text-sm sm:text-base font-medium">
             Welcome to FHIR-fly terminology management system.
           </p>
         </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 mb-6 sm:mb-8">
           {statCards.map((card, index) => (
-            <Card key={index} className="hover:shadow-lg transition-all duration-200 border-slate-200">
+            <Card 
+              key={index} 
+              className={`card-hover hover-lift border-slate-200 animate-slide-up`}
+              style={{ animationDelay: `${index * 0.1}s` }}
+            >
               <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
                 <CardTitle className="text-xs sm:text-sm font-medium text-slate-600">
                   {card.title}
@@ -115,7 +121,9 @@ export default function DashboardPage() {
                 </div>
               </CardHeader>
               <CardContent>
-                <div className="text-xl sm:text-2xl font-bold text-slate-800">{card.value}</div>
+                <div className="text-xl sm:text-2xl font-bold text-slate-800">
+                  {card.value}
+                </div>
                 <p className="text-xs text-slate-500 mt-1">
                   {card.description}
                 </p>
@@ -125,7 +133,7 @@ export default function DashboardPage() {
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6">
-          <Card className="border-slate-200">
+          <Card className="card-hover hover-lift border-slate-200 animate-slide-in-left">
             <CardHeader>
               <CardTitle className="text-slate-800 text-lg sm:text-xl">Quick Actions</CardTitle>
             </CardHeader>
@@ -133,7 +141,7 @@ export default function DashboardPage() {
               <div className="space-y-2 sm:space-y-3">
                 <button
                   onClick={() => router.push('/terminology')}
-                  className="w-full flex items-center justify-between p-3 sm:p-4 rounded-lg border border-slate-200 hover:bg-slate-50 hover:border-slate-300 transition-all duration-200"
+                  className="w-full flex items-center justify-between p-3 sm:p-4 rounded-lg border border-slate-200 hover:bg-slate-50 hover:border-slate-300 transition-all duration-200 hover-scale"
                 >
                   <div className="text-left">
                     <div className="font-medium text-slate-800 text-sm sm:text-base">Search Terminology</div>
@@ -143,7 +151,7 @@ export default function DashboardPage() {
                 </button>
                 <button
                   onClick={() => router.push('/problems')}
-                  className="w-full flex items-center justify-between p-3 sm:p-4 rounded-lg border border-slate-200 hover:bg-slate-50 hover:border-slate-300 transition-all duration-200"
+                  className="w-full flex items-center justify-between p-3 sm:p-4 rounded-lg border border-slate-200 hover:bg-slate-50 hover:border-slate-300 transition-all duration-200 hover-scale"
                 >
                   <div className="text-left">
                     <div className="font-medium text-slate-800 text-sm sm:text-base">View Problem List</div>
@@ -153,7 +161,7 @@ export default function DashboardPage() {
                 </button>
                 <button
                   onClick={() => router.push('/analytics')}
-                  className="w-full flex items-center justify-between p-3 sm:p-4 rounded-lg border border-slate-200 hover:bg-slate-50 hover:border-slate-300 transition-all duration-200"
+                  className="w-full flex items-center justify-between p-3 sm:p-4 rounded-lg border border-slate-200 hover:bg-slate-50 hover:border-slate-300 transition-all duration-200 hover-scale"
                 >
                   <div className="text-left">
                     <div className="font-medium text-slate-800 text-sm sm:text-base">View Analytics</div>
@@ -165,7 +173,7 @@ export default function DashboardPage() {
             </CardContent>
           </Card>
 
-          <Card className="border-slate-200">
+          <Card className="card-hover hover-lift border-slate-200 animate-slide-in-right">
             <CardHeader>
               <CardTitle className="text-slate-800 text-lg sm:text-xl">System Status</CardTitle>
             </CardHeader>
