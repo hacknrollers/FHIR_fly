@@ -4,7 +4,7 @@ from datetime import datetime
 from fastapi import FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
-from fastapi.middleware.base import BaseHTTPMiddleware
+from starlette.middleware.base import BaseHTTPMiddleware
 from contextlib import asynccontextmanager
 from app.db import engine, Base
 from app.routes import codesystem, concept, conceptmap, audit_log
@@ -51,7 +51,7 @@ app = FastAPI(
 # CORS middleware - Fixed configuration
 allowed_origins = [
     "http://localhost:3000",  # Local development
-    "https://api.fhirfly.me",  # Backend itself
+    "https://www.fhirfly.me",  # Backend itself
     "https://fhirfly.vercel.app",  # Vercel frontend
     "https://fhirfly.me",  # Alternative Vercel domain
 ]
@@ -86,18 +86,8 @@ app.add_middleware(
     CORSMiddleware,
     allow_origins=allowed_origins,
     allow_credentials=True,
-    allow_methods=["GET", "POST", "PUT", "DELETE", "OPTIONS", "HEAD"],
-    allow_headers=[
-        "Accept",
-        "Accept-Language",
-        "Content-Language",
-        "Content-Type",
-        "Authorization",
-        "X-Requested-With",
-        "Origin",
-        "Access-Control-Request-Method",
-        "Access-Control-Request-Headers",
-    ],
+    allow_methods=["*"],
+    allow_headers=["*"],
     expose_headers=["*"],
     max_age=600,  # Cache preflight response for 10 minutes
 )
