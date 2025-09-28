@@ -8,6 +8,7 @@ import {
   Search, 
   List, 
   BarChart3,
+  Database,
   X
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
@@ -17,6 +18,7 @@ const navigation = [
   { name: 'Terminology Search', href: '/terminology', icon: Search },
   { name: 'Problem List', href: '/problems', icon: List },
   { name: 'Analytics', href: '/analytics', icon: BarChart3 },
+  { name: 'Backend Data', href: '/backend-data', icon: Database },
 ];
 
 interface SidebarProps {

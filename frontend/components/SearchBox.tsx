@@ -94,8 +94,11 @@ export function SearchBox({ onSelect, placeholder = "Search terminology...", cla
         )}
       </div>
 
-      {isOpen && (
-        <div className="absolute z-50 w-full mt-1 bg-white border border-gray-200 rounded-md shadow-lg max-h-48 sm:max-h-60 overflow-y-auto">
+       {isOpen && (
+         <div className={cn(
+           "absolute z-50 w-full mt-1 bg-white border border-gray-200 rounded-md shadow-lg overflow-y-auto transition-all duration-200",
+           results.length <= 3 ? "max-h-none" : "max-h-48 sm:max-h-60"
+         )}>
           {isLoading ? (
             <div className="p-2 sm:p-3 text-center text-gray-500 text-xs sm:text-sm">Searching...</div>
           ) : results.length > 0 ? (

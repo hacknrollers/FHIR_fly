@@ -8,7 +8,7 @@ import { SearchBox } from '@/components/SearchBox';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Plus, Search, BookOpen } from 'lucide-react';
-import { type TerminologyResult, addProblem } from '@/services/api';
+import { type TerminologyResult, addProblem, translateConcept, type TranslationRequest, type TranslationResponse } from '@/services/api';
 
 export default function TerminologyPage() {
   const { user, isLoading: authLoading } = useAuth();
@@ -16,6 +16,10 @@ export default function TerminologyPage() {
   const [selectedTerm, setSelectedTerm] = useState<TerminologyResult | null>(null);
   const [isAdding, setIsAdding] = useState(false);
   const [addSuccess, setAddSuccess] = useState(false);
+  const [translationResult, setTranslationResult] = useState<TranslationResponse | null>(null);
+  const [isTranslating, setIsTranslating] = useState(false);
+  const [sourceCode, setSourceCode] = useState('');
+  const [targetCode, setTargetCode] = useState('');
 
   useEffect(() => {
     if (!authLoading && !user) {
@@ -43,6 +47,27 @@ export default function TerminologyPage() {
       console.error('Failed to add problem:', error);
     } finally {
       setIsAdding(false);
+    }
+  };
+
+  const handleTranslate = async () => {
+    if (!sourceCode || !targetCode) return;
+
+    try {
+      setIsTranslating(true);
+      const request: TranslationRequest = {
+        source_codesystem: "http://loinc.org", // Default source
+        target_codesystem: "http://snomed.info/sct", // Default target
+        source_code: sourceCode
+      };
+      
+      const result = await translateConcept(request);
+      setTranslationResult(result);
+    } catch (error) {
+      console.error('Failed to translate concept:', error);
+      setTranslationResult({ found: false, target_code: null, equivalence: null });
+    } finally {
+      setIsTranslating(false);
     }
   };
 
@@ -187,6 +212,66 @@ export default function TerminologyPage() {
               </Card>
             )}
           </div>
+        </div>
+
+        <div className="mt-6 sm:mt-8">
+          <Card className="card-hover hover-lift border-slate-200 animate-fade-in">
+            <CardHeader>
+              <CardTitle className="text-lg sm:text-xl text-slate-800">Concept Translation</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <div className="space-y-4">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-2">
+                      Source Code
+                    </label>
+                    <input
+                      type="text"
+                      value={sourceCode}
+                      onChange={(e) => setSourceCode(e.target.value)}
+                      placeholder="Enter source code (e.g., 33747-0)"
+                      className="w-full p-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-2">
+                      Target Code System
+                    </label>
+                    <input
+                      type="text"
+                      value={targetCode}
+                      onChange={(e) => setTargetCode(e.target.value)}
+                      placeholder="Target codesystem (e.g., http://snomed.info/sct)"
+                      className="w-full p-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                    />
+                  </div>
+                </div>
+                
+                <Button
+                  onClick={handleTranslate}
+                  disabled={isTranslating || !sourceCode}
+                  className="w-full"
+                >
+                  {isTranslating ? 'Translating...' : 'Translate Concept'}
+                </Button>
+
+                {translationResult && (
+                  <div className="mt-4 p-4 border rounded-md">
+                    <h4 className="font-medium text-gray-900 mb-2">Translation Result</h4>
+                    {translationResult.found ? (
+                      <div className="space-y-2">
+                        <p><strong>Target Code:</strong> {translationResult.target_code}</p>
+                        <p><strong>Equivalence:</strong> {translationResult.equivalence}</p>
+                      </div>
+                    ) : (
+                      <p className="text-gray-600">No translation found for the given source code.</p>
+                    )}
+                  </div>
+                )}
+              </div>
+            </CardContent>
+          </Card>
         </div>
 
         <div className="mt-6 sm:mt-8">
