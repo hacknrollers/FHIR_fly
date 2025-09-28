@@ -48,14 +48,40 @@ app = FastAPI(
 )
 
 # CORS middleware
-allowed_origins = os.getenv("ALLOWED_ORIGINS", "http://localhost:3000,https://fhirfly.me").split(",")
+allowed_origins = [
+    "http://localhost:3000",  # Local development
+    "https://api.fhirfly.me",  # Backend itself
+    "https://fhirfly.vercel.app",  # Vercel frontend
+    "https://fhir-fly.vercel.app",  # Alternative Vercel domain
+    "https://*.vercel.app",  # Any Vercel subdomain
+]
+
+# Add environment variable support for additional origins
+env_origins = os.getenv("ALLOWED_ORIGINS", "").split(",")
+if env_origins and env_origins[0]:  # Only add if not empty
+    allowed_origins.extend([origin.strip() for origin in env_origins if origin.strip()])
+
+# Log allowed origins for debugging
+logger.info(f"CORS allowed origins: {allowed_origins}")
+
 app.add_middleware(
     CORSMiddleware,
     allow_origins=allowed_origins,
     allow_credentials=True,
-    allow_methods=["*"],
+    allow_methods=["GET", "POST", "PUT", "DELETE", "OPTIONS"],
     allow_headers=["*"],
 )
+
+# Add a more permissive CORS middleware as fallback for development
+if os.getenv("ENVIRONMENT") == "development":
+    logger.info("Development mode: Adding permissive CORS")
+    app.add_middleware(
+        CORSMiddleware,
+        allow_origins=["*"],  # Allow all origins in development
+        allow_credentials=False,
+        allow_methods=["*"],
+        allow_headers=["*"],
+    )
 
 # Include routers
 app.include_router(codesystem.router, prefix="/api/v1")
@@ -94,6 +120,16 @@ def health_check():
         version="1.0.0",
         database=database_status
     )
+
+@app.get("/cors-debug")
+def cors_debug(request: Request):
+    """Debug endpoint to check CORS configuration"""
+    return {
+        "allowed_origins": allowed_origins,
+        "request_origin": request.headers.get("origin"),
+        "request_headers": dict(request.headers),
+        "cors_configured": True
+    }
 
 @app.exception_handler(Exception)
 async def global_exception_handler(request: Request, exc: Exception):
