@@ -188,12 +188,12 @@ export default function DashboardPage() {
                   <span className="text-green-600 font-medium text-xs sm:text-sm">Connected</span>
                 </div>
                 <div className="flex items-center justify-between py-2">
-                  <span className="text-xs sm:text-sm font-medium text-slate-700">FHIR Server</span>
-                  <span className="text-orange-600 font-medium text-xs sm:text-sm">Mock Mode</span>
+                  <span className="text-xs sm:text-sm font-medium text-slate-700">Backend</span>
+                  <span className="text-green-600 font-medium text-xs sm:text-sm">FastAPI</span>
                 </div>
                 <div className="flex items-center justify-between py-2">
                   <span className="text-xs sm:text-sm font-medium text-slate-700">Last Sync</span>
-                  <span className="text-slate-600 font-medium text-xs sm:text-sm">2 minutes ago</span>
+                  <span className="text-slate-600 font-medium text-xs sm:text-sm">Live</span>
                 </div>
               </div>
             </CardContent>
