@@ -39,17 +39,12 @@ export default function BackendDataPage() {
   const loadData = async () => {
     try {
       setIsLoading(true);
-      console.log('Loading backend data...');
       
       const [codeSystemsResponse, conceptsResponse, conceptMapsResponse] = await Promise.all([
         getCodeSystems(1, 20),
         getConcepts(1, 20),
         getConceptMaps(1, 20)
       ]);
-      
-      console.log('CodeSystems response:', codeSystemsResponse);
-      console.log('Concepts response:', conceptsResponse);
-      console.log('ConceptMaps response:', conceptMapsResponse);
       
       setCodeSystems(codeSystemsResponse.items);
       setConcepts(conceptsResponse.items);
