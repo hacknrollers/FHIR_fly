@@ -65,7 +65,7 @@ export default function TerminologyPage() {
       setTranslationResult(result);
     } catch (error) {
       console.error('Failed to translate concept:', error);
-      setTranslationResult({ found: false, target_code: null, equivalence: null });
+      setTranslationResult({ found: false, target_code: undefined, equivalence: undefined });
     } finally {
       setIsTranslating(false);
     }

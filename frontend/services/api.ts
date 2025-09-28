@@ -210,16 +210,12 @@ export async function searchTerminology(query: string): Promise<TerminologyResul
   }
   
   try {
-    console.log('Searching terminology for:', query);
-    
     // Search concepts
     const conceptsResponse = await getConcepts(1, 20, undefined, query);
-    console.log('Concepts response:', conceptsResponse);
     const concepts = conceptsResponse.items;
     
     // Get codesystems for context
     const codesystemsResponse = await getCodeSystems(1, 100);
-    console.log('Codesystems response:', codesystemsResponse);
     const codesystems = codesystemsResponse.items;
     
     // Convert concepts to terminology results
@@ -228,7 +224,6 @@ export async function searchTerminology(query: string): Promise<TerminologyResul
       return conceptToTerminologyResult(concept, codesystem);
     });
     
-    console.log('Search results:', results);
     return results;
   } catch (error) {
     console.error('Failed to search terminology:', error);
