@@ -7,7 +7,8 @@ from app.schemas import (
     Concept, ConceptCreate, ConceptUpdate, 
     PaginationParams, PaginatedConceptResponse
 )
-from app.crud import concept as concept_crud
+from app.crud import concept as concept_crud, conceptmap as conceptmap_crud
+from app.models import Concept as ConceptModel
 import logging
 
 logger = logging.getLogger(__name__)
@@ -37,6 +38,7 @@ def read_concepts(
 ):
     """Retrieve concepts with pagination"""
     try:
+        logger.info(f"/concepts search=<{search}> page={page} size={size} codesystem_id={codesystem_id}")
         skip = (page - 1) * size
         concepts = concept_crud.concept.get_multi(
             db=db, skip=skip, limit=size, codesystem_id=codesystem_id, search=search
@@ -45,9 +47,53 @@ def read_concepts(
             db=db, codesystem_id=codesystem_id, search=search
         )
         pages = (total + size - 1) // size
-        
+        # Merge ConceptMap mappings into concept properties for easier consumption
+        concept_ids = [c.id for c in concepts]
+        mappings = conceptmap_crud.conceptmap.get_by_concept_ids(db=db, concept_ids=concept_ids)
+        logger.info(f"Found {len(mappings)} conceptmap rows for {len(concept_ids)} concepts")
+
+        # Build lookup dictionaries
+        source_map = {}
+        target_map = {}
+        for m in mappings:
+            source_map.setdefault(m.source_code, []).append(m)
+            target_map.setdefault(m.target_code, []).append(m)
+
+        enriched_items = []
+        for c in concepts:
+            props = list(c.properties or [])
+            # If this concept is NAMASTE (source), attach its ICD11 mapping(s)
+            if c.id in source_map:
+                for m in source_map[c.id]:
+                    props.append({
+                        "code": "icd11Mapping",
+                        "valueCode": str(m.target_code),
+                        "equivalence": m.equivalence
+                    })
+            # If this concept is ICD11 (target), attach its NAMASTE mapping(s)
+            if c.id in target_map:
+                for m in target_map[c.id]:
+                    props.append({
+                        "code": "namasteMapping",
+                        "valueCode": str(m.source_code),
+                        "equivalence": m.equivalence
+                    })
+            # Create a shallow copy model with updated properties
+            enriched = ConceptModel(
+                id=c.id,
+                codesystem_id=c.codesystem_id,
+                code=c.code,
+                display=c.display,
+                definition=c.definition,
+                properties=props,
+                raw=c.raw,
+                created_at=c.created_at,
+                updated_at=c.updated_at
+            )
+            enriched_items.append(enriched)
+
         return PaginatedConceptResponse(
-            items=concepts,
+            items=enriched_items,
             total=total,
             page=page,
             size=size,

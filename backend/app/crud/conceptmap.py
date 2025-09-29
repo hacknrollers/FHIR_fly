@@ -1,7 +1,7 @@
 from typing import List, Optional
 from uuid import UUID
 from sqlalchemy.orm import Session
-from sqlalchemy import and_, or_
+from sqlalchemy import and_, or_, func
 from app.models import ConceptMap
 from app.schemas import ConceptMapCreate, ConceptMapUpdate
 import logging
@@ -108,5 +108,20 @@ class ConceptMapCRUD:
             query = query.filter(search_filter)
         
         return query.count()
+
+    def get_by_concept_ids(
+        self,
+        db: Session,
+        concept_ids: List[UUID]
+    ) -> List[ConceptMap]:
+        """Fetch all conceptmap rows where either source_code or target_code is in concept_ids."""
+        if not concept_ids:
+            return []
+        return db.query(ConceptMap).filter(
+            or_(
+                ConceptMap.source_code.in_(concept_ids),
+                ConceptMap.target_code.in_(concept_ids)
+            )
+        ).all()
 
 conceptmap = ConceptMapCRUD()
