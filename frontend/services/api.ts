@@ -96,9 +96,9 @@ export interface AnalyticsData {
 // API Helper Functions
 async function apiRequest<T>(endpoint: string, options: RequestInit = {}): Promise<T> {
   const url = `${API_BASE_URL}${endpoint}`;
-  
+
   console.log(`API Request: ${url}`); // Debug log
-  
+
   try {
     const response = await fetch(url, {
       headers: {
@@ -111,7 +111,7 @@ async function apiRequest<T>(endpoint: string, options: RequestInit = {}): Promi
     });
 
     if (!response.ok) {
-      console.error(`API Error: ${response.status} ${response.statusText}`); // Debug log
+      console.error(`API Error: ${response.status} ${response.statusText}`);
       const errorText = await response.text();
       console.error(`Error details: ${errorText}`);
       throw new Error(`API request failed: ${response.status} ${response.statusText}`);
@@ -126,38 +126,34 @@ async function apiRequest<T>(endpoint: string, options: RequestInit = {}): Promi
 
 // Helper function to convert Concept to TerminologyResult
 function conceptToTerminologyResult(concept: Concept, codesystem?: CodeSystem): TerminologyResult {
-  // Extract ICD-11 code from properties array
   const icd11Mapping = concept.properties?.find((prop: any) => prop.code === 'icd11Mapping');
   const icd11Code = icd11Mapping?.valueCode || concept.code;
-  
+
   return {
     id: concept.id,
     termName: concept.display || concept.code,
     namasteCode: concept.code,
     icd11Code: icd11Code,
-    description: concept.definition || codesystem?.title
+    description: concept.definition || codesystem?.title,
   };
 }
 
-// Authentication API (Legacy - keeping for compatibility)
+// Authentication API (Legacy)
 export async function login(abhaId: string): Promise<LoginResponse> {
-  // For now, return a mock response since we don't have auth in backend yet
   if (!abhaId || abhaId.length < 10) {
     throw new Error("Invalid ABHA ID");
   }
-  
+
   return {
     token: `dummy-token-${Date.now()}`,
     user: {
       abhaId,
-      name: `User ${abhaId.slice(-4)}`
-    }
+      name: `User ${abhaId.slice(-4)}`,
+    },
   };
 }
 
-export async function logout(): Promise<void> {
-  // In real implementation, this would call logout endpoint
-}
+export async function logout(): Promise<void> {}
 
 // Backend API Functions
 
@@ -166,9 +162,9 @@ export async function getCodeSystems(page: number = 1, size: number = 10, search
   const params = new URLSearchParams({
     page: page.toString(),
     size: size.toString(),
-    ...(search && { search })
+    ...(search && { search }),
   });
-  
+
   return apiRequest<PaginatedResponse<CodeSystem>>(`/api/v1/codesystems/?${params}`);
 }
 
@@ -182,9 +178,9 @@ export async function getConcepts(page: number = 1, size: number = 10, codesyste
     page: page.toString(),
     size: size.toString(),
     ...(codesystemId && { codesystem_id: codesystemId }),
-    ...(search && { search })
+    ...(search && { search }),
   });
-  
+
   return apiRequest<PaginatedResponse<Concept>>(`/api/v1/concepts/?${params}`);
 }
 
@@ -199,9 +195,9 @@ export async function getConceptMaps(page: number = 1, size: number = 10, source
     size: size.toString(),
     ...(sourceCodesystemId && { source_codesystem_id: sourceCodesystemId }),
     ...(targetCodesystemId && { target_codesystem_id: targetCodesystemId }),
-    ...(search && { search })
+    ...(search && { search }),
   });
-  
+
   return apiRequest<PaginatedResponse<ConceptMap>>(`/api/v1/conceptmaps/?${params}`);
 }
 
@@ -209,59 +205,65 @@ export async function getConceptMaps(page: number = 1, size: number = 10, source
 export async function translateConcept(request: TranslationRequest): Promise<TranslationResponse> {
   return apiRequest<TranslationResponse>('/api/v1/conceptmaps/translate', {
     method: 'POST',
-    body: JSON.stringify(request)
+    body: JSON.stringify(request),
   });
 }
 
-// Legacy API Functions (for compatibility with existing frontend)
-
-// Terminology Search API - now uses real backend
+// Terminology Search API (Updated)
 export async function searchTerminology(query: string): Promise<TerminologyResult[]> {
   if (!query || query.length < 2) {
     return [];
   }
-  
+
   try {
-    // Search concepts
+    // First try conceptmaps (for Namaste ↔ ICD-11)
+    const conceptMapsResponse = await getConceptMaps(1, 20, undefined, undefined, query);
+    if (conceptMapsResponse.items.length > 0) {
+      return conceptMapsResponse.items.map(map => ({
+        id: map.id,
+        termName: map.meta_data?.display || map.source_code,
+        namasteCode: map.source_code,
+        icd11Code: map.target_code,
+        description: map.meta_data?.definition || "",
+      }));
+    }
+
+    // Fallback: use concepts if no mappings found
     const conceptsResponse = await getConcepts(1, 20, undefined, query);
     const concepts = conceptsResponse.items;
-    
-    // Get codesystems for context
     const codesystemsResponse = await getCodeSystems(1, 100);
     const codesystems = codesystemsResponse.items;
-    
-    // Convert concepts to terminology results
-    const results = concepts.map(concept => {
+
+    return concepts.map(concept => {
       const codesystem = codesystems.find(cs => cs.id === concept.codesystem_id);
       return conceptToTerminologyResult(concept, codesystem);
     });
-    
-    return results;
   } catch (error) {
     console.error('Failed to search terminology:', error);
     return [];
   }
 }
 
-// Problem List API - using concepts as problems for now
+
+// Problem List API
 export async function getProblemList(): Promise<ProblemListItem[]> {
   try {
     const conceptsResponse = await getConcepts(1, 50);
     const concepts = conceptsResponse.items;
-    
+
     const codesystemsResponse = await getCodeSystems(1, 100);
     const codesystems = codesystemsResponse.items;
-    
+
     return concepts.map(concept => {
       const codesystem = codesystems.find(cs => cs.id === concept.codesystem_id);
       const termResult = conceptToTerminologyResult(concept, codesystem);
-      
+
       return {
         id: concept.id,
         termName: termResult.termName,
         namasteCode: termResult.namasteCode,
         icd11Code: termResult.icd11Code,
-        addedAt: concept.created_at
+        addedAt: concept.created_at,
       };
     });
   } catch (error) {
@@ -271,46 +273,39 @@ export async function getProblemList(): Promise<ProblemListItem[]> {
 }
 
 export async function addProblem(term: TerminologyResult): Promise<ProblemListItem> {
-  // For now, just return the term as a problem item
-  // In a real implementation, this would create a new concept or problem record
   return {
     id: `problem-${Date.now()}`,
     termName: term.termName,
     namasteCode: term.namasteCode,
     icd11Code: term.icd11Code,
-    addedAt: new Date().toISOString()
+    addedAt: new Date().toISOString(),
   };
 }
 
 export async function removeProblem(id: string): Promise<void> {
-  // In a real implementation, this would delete the problem record
   console.log(`Removing problem: ${id}`);
 }
 
-// Analytics API - using real data
+// Analytics API
 export async function getAnalyticsData(): Promise<AnalyticsData[]> {
   try {
     const conceptsResponse = await getConcepts(1, 100);
     const concepts = conceptsResponse.items;
-    
-    // Count concepts by display name
+
     const termCounts: { [key: string]: number } = {};
     concepts.forEach(concept => {
       const term = concept.display || concept.code;
       termCounts[term] = (termCounts[term] || 0) + 1;
     });
-    
-    return Object.entries(termCounts).map(([term, count]) => ({
-      term,
-      count
-    }));
+
+    return Object.entries(termCounts).map(([term, count]) => ({ term, count }));
   } catch (error) {
     console.error('Failed to get analytics data:', error);
     return [];
   }
 }
 
-// Dashboard API - using real data
+// Dashboard API
 export async function getDashboardStats(): Promise<{
   totalPatients: number;
   totalTermsMapped: number;
@@ -318,21 +313,21 @@ export async function getDashboardStats(): Promise<{
 }> {
   try {
     const [conceptsResponse, codesystemsResponse] = await Promise.all([
-      getConcepts(1, 1), // Just get count
-      getCodeSystems(1, 1) // Just get count
+      getConcepts(1, 1),
+      getCodeSystems(1, 1),
     ]);
-    
+
     return {
-      totalPatients: 1247, // Mock data
+      totalPatients: 1247,
       totalTermsMapped: conceptsResponse.total,
-      recentProblems: Math.min(conceptsResponse.total, 23) // Recent problems
+      recentProblems: Math.min(conceptsResponse.total, 23),
     };
   } catch (error) {
     console.error('Failed to get dashboard stats:', error);
     return {
       totalPatients: 0,
       totalTermsMapped: 0,
-      recentProblems: 0
+      recentProblems: 0,
     };
   }
 }
