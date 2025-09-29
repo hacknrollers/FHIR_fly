@@ -100,22 +100,32 @@ export default function TerminologyPage() {
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6">
           <div className="space-y-4 sm:space-y-6">
-            <Card className="card-hover hover-lift border-slate-200 animate-slide-in-left">
-              <CardHeader>
+            <Card className="card-hover hover-lift border-slate-200 animate-slide-in-left min-h-[400px] sm:min-h-[500px]">
+              <CardHeader className="pb-4">
                 <CardTitle className="flex items-center text-lg sm:text-xl text-slate-800">
                   <Search className="mr-2 h-4 w-4 sm:h-5 sm:w-5" />
                   Search Terminology
                 </CardTitle>
               </CardHeader>
-              <CardContent>
-                <SearchBox
-                  onSelect={handleTermSelect}
-                  placeholder="Search for medical terms (e.g., Jwara, Ajeerna)..."
-                  className="w-full"
-                />
-                <p className="text-xs sm:text-sm text-gray-500 mt-2">
-                  Start typing to search for medical terminology. Results will show NAMASTE and ICD-11 mappings.
-                </p>
+              <CardContent className="flex flex-col justify-center h-full">
+                <div className="space-y-4">
+                  <SearchBox
+                    onSelect={handleTermSelect}
+                    placeholder="Search for medical terms (e.g., Typhoid, Fever)..."
+                    className="w-full"
+                  />
+                  <p className="text-sm sm:text-base text-gray-600 leading-relaxed">
+                    Start typing to search for medical terminology. Results will show NAMASTE and ICD-11 mappings.
+                  </p>
+                  <div className="mt-6 p-4 bg-blue-50 rounded-lg border border-blue-200">
+                    <h4 className="font-medium text-blue-900 mb-2">Search Tips:</h4>
+                    <ul className="text-sm text-blue-800 space-y-1">
+                      <li>• Try searching by disease names (e.g., "Typhoid", "Malaria")</li>
+                      <li>• Use symptoms like "Fever", "Headache", "Cough"</li>
+                      <li>• Search by body parts like "Heart", "Liver", "Kidney"</li>
+                    </ul>
+                  </div>
+                </div>
               </CardContent>
             </Card>
 
@@ -214,7 +224,7 @@ export default function TerminologyPage() {
           </div>
         </div>
 
-        <div className="mt-6 sm:mt-8">
+        {/* <div className="mt-6 sm:mt-8">
           <Card className="card-hover hover-lift border-slate-200 animate-fade-in">
             <CardHeader>
               <CardTitle className="text-lg sm:text-xl text-slate-800">Concept Translation</CardTitle>
@@ -272,9 +282,9 @@ export default function TerminologyPage() {
               </div>
             </CardContent>
           </Card>
-        </div>
+        </div> */}
 
-        <div className="mt-6 sm:mt-8">
+        <div className="mt-6 sm:mt-8">  
           <Card className="card-hover hover-lift border-slate-200 animate-fade-in">
             <CardHeader>
               <CardTitle className="text-lg sm:text-xl text-slate-800">Search Tips</CardTitle>
