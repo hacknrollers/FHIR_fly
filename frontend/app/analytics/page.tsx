@@ -21,7 +21,7 @@ export default function AnalyticsPage() {
       return;
     }
 
-    if (user) {
+    if (user && user.role !== 'abha') {
       loadAnalyticsData();
     }
   }, [user, authLoading, router]);
@@ -49,7 +49,7 @@ export default function AnalyticsPage() {
     );
   }
 
-  if (!user) {
+  if (!user || user.role === 'abha') {
     return null;
   }
 
@@ -134,7 +134,7 @@ export default function AnalyticsPage() {
             <Charts data={analyticsData} isLoading={isLoading} />
           </div>
           
-          <Card className="card-hover hover-lift border-slate-200 animate-slide-in-right">
+          <Card className="border-slate-200 animate-slide-in-right">
             <CardHeader>
               <CardTitle className="text-lg sm:text-xl text-slate-800">Top Terms</CardTitle>
             </CardHeader>
@@ -167,11 +167,11 @@ export default function AnalyticsPage() {
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6">
-          <Card className="card-hover hover-lift border-slate-200 animate-fade-in">
+          <Card className="border-slate-200 animate-fade-in h-full flex flex-col">
             <CardHeader>
               <CardTitle className="text-lg sm:text-xl text-slate-800">Usage Distribution</CardTitle>
             </CardHeader>
-            <CardContent>
+            <CardContent className="flex-1">
               {isLoading ? (
                 <div className="text-center py-6 sm:py-8">
                   <div className="animate-spin rounded-full h-6 w-6 border-b-2 border-blue-600 mx-auto"></div>
@@ -201,12 +201,12 @@ export default function AnalyticsPage() {
             </CardContent>
           </Card>
 
-          <Card className="card-hover hover-lift border-slate-200 animate-fade-in" style={{ animationDelay: '0.2s' }}>
+          <Card className="border-slate-200 animate-fade-in h-full flex flex-col" style={{ animationDelay: '0.2s' }}>
             <CardHeader>
               <CardTitle className="text-lg sm:text-xl text-slate-800">Data Insights</CardTitle>
             </CardHeader>
-            <CardContent>
-              <div className="space-y-3 sm:space-y-4 text-xs sm:text-sm">
+            <CardContent className="flex-1">
+              <div className="space-y-3 sm:space-y-4 text-xs sm:text-sm h-full">
                 <div>
                   <h4 className="font-medium text-gray-900 mb-2">Most Active Term</h4>
                   <p className="text-gray-600">

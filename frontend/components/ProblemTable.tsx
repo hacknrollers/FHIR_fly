@@ -53,10 +53,7 @@ export function ProblemTable({
 
   return (
     <Card>
-      <CardHeader>
-        <CardTitle className="text-lg sm:text-xl">Problem List</CardTitle>
-      </CardHeader>
-      <CardContent>
+      <CardContent className="pt-4">
         <div className="space-y-4">
           {problems.length === 0 ? (
             <div className="text-center py-6 sm:py-8 text-gray-500 text-sm sm:text-base">

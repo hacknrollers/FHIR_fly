@@ -1,6 +1,7 @@
 'use client';
 
 import Link from 'next/link';
+import Image from 'next/image';
 import { usePathname } from 'next/navigation';
 import { cn } from '@/lib/utils';
 import { 
@@ -8,17 +9,16 @@ import {
   Search, 
   List, 
   BarChart3,
-  Database,
   X
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import { useAuth } from '@/contexts/AuthContext';
 
 const navigation = [
   { name: 'Dashboard', href: '/dashboard', icon: LayoutDashboard },
   { name: 'Terminology Search', href: '/terminology', icon: Search },
-  { name: 'Problem List', href: '/problems', icon: List },
+  { name: 'Prior Medical History', href: '/problems', icon: List },
   { name: 'Analytics', href: '/analytics', icon: BarChart3 },
-  { name: 'Backend Data', href: '/backend-data', icon: Database },
 ];
 
 interface SidebarProps {
@@ -26,12 +26,16 @@ interface SidebarProps {
 }
 
 export function Sidebar({ onClose }: SidebarProps) {
+  const { user } = useAuth();
   const pathname = usePathname();
 
   return (
     <div className="flex h-full w-64 flex-col bg-slate-50/95 backdrop-blur-sm border-r border-slate-200">
       <div className="flex h-16 items-center justify-between px-6 border-b border-slate-200">
-        <h1 className="text-xl font-bold text-slate-800">FHIR-fly</h1>
+        <div className="flex items-center space-x-2">
+          <Image src="/favicon.ico" alt="FHIR-fly" width={24} height={24} />
+          <h1 className="text-xl font-bold text-slate-800">FHIR-fly</h1>
+        </div>
         {/* Close button for mobile */}
         <Button
           variant="ghost"
@@ -44,7 +48,12 @@ export function Sidebar({ onClose }: SidebarProps) {
       </div>
       
       <nav className="flex-1 space-y-1 px-3 py-4">
-        {navigation.map((item, index) => {
+        {navigation
+          .filter(item => {
+            if (item.name === 'Analytics' && user?.role === 'abha') return false;
+            return true;
+          })
+          .map((item, index) => {
           const isActive = pathname === item.href;
           return (
             <Link
