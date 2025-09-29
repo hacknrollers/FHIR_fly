@@ -26,12 +26,15 @@ export default function ProblemsPage() {
   const [saveMessage, setSaveMessage] = useState('');
 
   useEffect(() => {
-    if (!authLoading && !user) {
-      router.push('/login');
-      return;
-    }
-
-    if (user) {
+    if (!authLoading) {
+      if (!user) {
+        router.push('/login');
+        return;
+      }
+      if (user.role === 'clinician') {
+        router.push('/dashboard');
+        return;
+      }
       loadProblems();
     }
   }, [user, authLoading, router]);
@@ -88,7 +91,7 @@ export default function ProblemsPage() {
     }
   };
 
-  if (authLoading) {
+  if (authLoading || user?.role === 'clinician') {
     return (
       <div className="min-h-screen flex items-center justify-center">
         <div className="text-center">
