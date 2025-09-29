@@ -1,6 +1,7 @@
 'use client';
 
 import { useAuth } from '@/contexts/AuthContext';
+import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import { LogOut, Menu } from 'lucide-react';
 
@@ -24,7 +25,7 @@ export function Header({ onMenuClick }: HeaderProps) {
           >
             <Menu className="h-5 w-5" />
           </Button>
-          <h1 className="text-xl sm:text-2xl font-bold text-slate-800">
+          <h1 className="text-xl sm:text-2xl font-bold text-slate-800 sm:hidden">
             FHIR-fly
           </h1>
         </div>
@@ -33,11 +34,11 @@ export function Header({ onMenuClick }: HeaderProps) {
           <div className="hidden sm:block text-sm text-slate-600">
             Welcome, {user?.name || 'User'}
           </div>
-          <div className="h-8 w-8 rounded-full bg-gradient-to-r from-blue-600 to-indigo-600 flex items-center justify-center shadow-md">
+          <Link href="/account" className="h-8 w-8 rounded-full bg-gradient-to-r from-blue-600 to-indigo-600 flex items-center justify-center shadow-md hover-scale" title="Account">
             <span className="text-sm font-medium text-white">
               {user?.abhaId?.slice(-2) || 'U'}
             </span>
-          </div>
+          </Link>
           <Button
             onClick={logout}
             variant="outline"

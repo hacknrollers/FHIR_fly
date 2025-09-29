@@ -100,7 +100,7 @@ export default function TerminologyPage() {
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6">
           <div className="space-y-4 sm:space-y-6">
-            <Card className="card-hover hover-lift border-slate-200 animate-slide-in-left min-h-[400px] sm:min-h-[500px]">
+            <Card className="border-slate-200 animate-slide-in-left min-h-[400px] sm:min-h-[500px]">
               <CardHeader className="pb-4">
                 <CardTitle className="flex items-center text-lg sm:text-xl text-slate-800">
                   <Search className="mr-2 h-4 w-4 sm:h-5 sm:w-5" />
@@ -149,7 +149,7 @@ export default function TerminologyPage() {
 
           <div>
             {selectedTerm ? (
-              <Card className="card-hover hover-lift border-slate-200 animate-slide-in-right">
+              <Card className="border-slate-200 animate-slide-in-right">
                 <CardHeader>
                   <CardTitle className="flex items-center text-lg sm:text-xl text-slate-800">
                     <BookOpen className="mr-2 h-4 w-4 sm:h-5 sm:w-5" />
@@ -209,7 +209,7 @@ export default function TerminologyPage() {
                 </CardContent>
               </Card>
             ) : (
-              <Card className="card-hover hover-lift border-slate-200 animate-slide-in-right">
+              <Card className="border-slate-200 animate-slide-in-right">
                 <CardHeader>
                   <CardTitle className="text-lg sm:text-xl text-slate-800">No Term Selected</CardTitle>
                 </CardHeader>
@@ -224,68 +224,10 @@ export default function TerminologyPage() {
           </div>
         </div>
 
-        {/* <div className="mt-6 sm:mt-8">
-          <Card className="card-hover hover-lift border-slate-200 animate-fade-in">
-            <CardHeader>
-              <CardTitle className="text-lg sm:text-xl text-slate-800">Concept Translation</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <div className="space-y-4">
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">
-                      Source Code
-                    </label>
-                    <input
-                      type="text"
-                      value={sourceCode}
-                      onChange={(e) => setSourceCode(e.target.value)}
-                      placeholder="Enter source code (e.g., 33747-0)"
-                      className="w-full p-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                    />
-                  </div>
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">
-                      Target Code System
-                    </label>
-                    <input
-                      type="text"
-                      value={targetCode}
-                      onChange={(e) => setTargetCode(e.target.value)}
-                      placeholder="Target codesystem (e.g., http://snomed.info/sct)"
-                      className="w-full p-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                    />
-                  </div>
-                </div>
-                
-                <Button
-                  onClick={handleTranslate}
-                  disabled={isTranslating || !sourceCode}
-                  className="w-full"
-                >
-                  {isTranslating ? 'Translating...' : 'Translate Concept'}
-                </Button>
-
-                {translationResult && (
-                  <div className="mt-4 p-4 border rounded-md">
-                    <h4 className="font-medium text-gray-900 mb-2">Translation Result</h4>
-                    {translationResult.found ? (
-                      <div className="space-y-2">
-                        <p><strong>Target Code:</strong> {translationResult.target_code}</p>
-                        <p><strong>Equivalence:</strong> {translationResult.equivalence}</p>
-                      </div>
-                    ) : (
-                      <p className="text-gray-600">No translation found for the given source code.</p>
-                    )}
-                  </div>
-                )}
-              </div>
-            </CardContent>
-          </Card>
-        </div> */}
+       
 
         <div className="mt-6 sm:mt-8">  
-          <Card className="card-hover hover-lift border-slate-200 animate-fade-in">
+          <Card className="border-slate-200 animate-fade-in">
             <CardHeader>
               <CardTitle className="text-lg sm:text-xl text-slate-800">Search Tips</CardTitle>
             </CardHeader>

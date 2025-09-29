@@ -108,7 +108,7 @@ export default function ProblemsPage() {
       <div className="p-4 sm:p-6 particle-bg">
         <div className="mb-6 sm:mb-8 animate-fade-in">
           <h1 className="text-2xl sm:text-3xl font-bold text-slate-900 animate-slide-up">
-            Problem List
+            Prior Medical History
           </h1>
           <p className="text-slate-900 mt-2 text-sm sm:text-base font-medium animate-slide-up" style={{ animationDelay: '0.1s' }}>
             Manage patient problems and medical terminology mappings.
@@ -117,11 +117,11 @@ export default function ProblemsPage() {
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 sm:gap-6 mb-6 sm:mb-8">
           <div className="lg:col-span-2">
-            <Card className="card-hover hover-lift border-slate-200 animate-slide-in-left">
+            <Card className="border-slate-200 animate-slide-in-left">
               <CardHeader>
                 <CardTitle className="flex items-center text-lg sm:text-xl text-slate-800">
                   <List className="mr-2 h-4 w-4 sm:h-5 sm:w-5" />
-                  Current Problems
+                  History Items
                 </CardTitle>
               </CardHeader>
               <CardContent>
@@ -145,11 +145,11 @@ export default function ProblemsPage() {
           </div>
 
           <div className="space-y-4 sm:space-y-6">
-            <Card className="card-hover hover-lift border-slate-200 animate-slide-in-right">
+            <Card className="border-slate-200 animate-slide-in-right">
               <CardHeader>
                 <CardTitle className="flex items-center text-lg sm:text-xl text-slate-800">
                   <Plus className="mr-2 h-4 w-4 sm:h-5 sm:w-5" />
-                  Add New Problem
+                  Add History Item
                 </CardTitle>
               </CardHeader>
               <CardContent>
@@ -158,9 +158,9 @@ export default function ProblemsPage() {
                   placeholder="Search to add problem..."
                   className="w-full"
                 />
-                <p className="text-xs sm:text-sm text-gray-500 mt-2">
-                  Search for medical terms to add them to the problem list.
-                </p>
+                  <p className="text-xs sm:text-sm text-gray-500 mt-2">
+                    Search and add prior medical history terms.
+                  </p>
               </CardContent>
             </Card>
 
@@ -181,7 +181,7 @@ export default function ProblemsPage() {
               </div>
             )}
 
-            <Card className="card-hover hover-lift border-slate-200 animate-slide-in-right" style={{ animationDelay: '0.2s' }}>
+            <Card className="border-slate-200 animate-slide-in-right" style={{ animationDelay: '0.2s' }}>
               <CardHeader>
                 <CardTitle className="flex items-center text-lg sm:text-xl text-slate-800">
                   <AlertCircle className="mr-2 h-4 w-4 sm:h-5 sm:w-5" />
@@ -191,7 +191,7 @@ export default function ProblemsPage() {
               <CardContent>
                 <div className="space-y-2 sm:space-y-3">
                   <div className="flex justify-between">
-                    <span className="text-xs sm:text-sm text-gray-600">Total Problems</span>
+                    <span className="text-xs sm:text-sm text-gray-600">Total History Items</span>
                     <span className="font-medium text-xs sm:text-sm">{problems.length}</span>
                   </div>
                   <div className="flex justify-between">
@@ -215,27 +215,21 @@ export default function ProblemsPage() {
         <div className="mt-6 sm:mt-8">
           <Card>
             <CardHeader>
-              <CardTitle className="text-lg sm:text-xl">Problem List Management</CardTitle>
+              <CardTitle className="text-lg sm:text-xl">Prior Medical History Management</CardTitle>
             </CardHeader>
             <CardContent>
               <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-xs sm:text-sm">
                 <div>
-                  <h4 className="font-medium text-gray-900 mb-2">Adding Problems</h4>
-                  <p className="text-gray-600">
-                    Use the search box to find and add medical terms to the problem list.
-                  </p>
+                  <h4 className="font-medium text-gray-900 mb-2">Adding History Items</h4>
+                  <p className="text-gray-600">Use the search box to add medical history terms.</p>
                 </div>
                 <div>
-                  <h4 className="font-medium text-gray-900 mb-2">Editing Problems</h4>
-                  <p className="text-gray-600">
-                    Click "Edit" to modify term names, NAMASTE codes, or ICD-11 codes.
-                  </p>
+                  <h4 className="font-medium text-gray-900 mb-2">Editing History</h4>
+                  <p className="text-gray-600">Edit term names, NAMASTE codes, or ICD-11 codes.</p>
                 </div>
                 <div>
                   <h4 className="font-medium text-gray-900 mb-2">Saving Changes</h4>
-                  <p className="text-gray-600">
-                    Click "Save Changes" to persist your modifications to the system.
-                  </p>
+                  <p className="text-gray-600">Click "Save Changes" to persist your modifications.</p>
                 </div>
               </div>
             </CardContent>
