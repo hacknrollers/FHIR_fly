@@ -1,6 +1,7 @@
 import './globals.css';
 import type { Metadata } from 'next';
 import { ClientProviders } from '@/components/providers/ClientProviders';
+import { Chatbot } from '@/components/Chatbot';
 
 export const metadata: Metadata = {
   title: 'FHIR-fly',
@@ -32,6 +33,7 @@ export default function RootLayout({
       <body>
         <ClientProviders>
           {children}
+          <Chatbot />
         </ClientProviders>
       </body>
     </html>
