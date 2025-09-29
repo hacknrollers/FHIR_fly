@@ -95,30 +95,27 @@ export function SearchBox({ onSelect, placeholder = "Search terminology...", cla
       </div>
 
        {isOpen && (
-         <div className={cn(
-           "absolute z-50 w-full mt-1 bg-white border border-gray-200 rounded-md shadow-lg overflow-y-auto transition-all duration-200",
-           results.length <= 3 ? "max-h-none" : "max-h-48 sm:max-h-60"
-         )}>
+         <div className="absolute z-50 w-full mt-1 bg-white border border-gray-200 rounded-md shadow-lg overflow-y-auto transition-all duration-200 max-h-80 sm:max-h-96">
           {isLoading ? (
-            <div className="p-2 sm:p-3 text-center text-gray-500 text-xs sm:text-sm">Searching...</div>
+            <div className="p-4 text-center text-gray-500 text-sm">Searching...</div>
           ) : results.length > 0 ? (
             results.map((term) => (
               <button
                 key={term.id}
                 onClick={() => handleSelect(term)}
-                className="w-full px-3 sm:px-4 py-2 sm:py-3 text-left hover:bg-gray-50 border-b border-gray-100 last:border-b-0"
+                className="w-full px-4 py-4 text-left hover:bg-gray-50 border-b border-gray-100 last:border-b-0 focus:bg-gray-50 focus:outline-none transition-colors duration-150"
               >
-                <div className="font-medium text-gray-900 text-sm sm:text-base truncate">{term.termName}</div>
-                <div className="text-xs sm:text-sm text-gray-500 truncate">
+                <div className="font-medium text-gray-900 text-base sm:text-lg truncate">{term.termName}</div>
+                <div className="text-sm text-gray-500 truncate mt-1">
                   NAMASTE: {term.namasteCode} | ICD-11: {term.icd11Code}
                 </div>
                 {term.description && (
-                  <div className="text-xs text-gray-400 mt-1 line-clamp-2">{term.description}</div>
+                  <div className="text-sm text-gray-400 mt-2 line-clamp-2">{term.description}</div>
                 )}
               </button>
             ))
           ) : query.length >= 2 ? (
-            <div className="p-2 sm:p-3 text-center text-gray-500 text-xs sm:text-sm">No results found</div>
+            <div className="p-4 text-center text-gray-500 text-sm">No results found</div>
           ) : null}
         </div>
       )}
