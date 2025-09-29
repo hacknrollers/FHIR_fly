@@ -51,6 +51,7 @@ export function Sidebar({ onClose }: SidebarProps) {
         {navigation
           .filter(item => {
             if (item.name === 'Analytics' && user?.role === 'abha') return false;
+            if (item.name === 'Prior Medical History' && user?.role === 'clinician') return false;
             return true;
           })
           .map((item, index) => {
