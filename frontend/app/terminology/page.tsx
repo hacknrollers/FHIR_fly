@@ -111,7 +111,7 @@ export default function TerminologyPage() {
                 <div className="space-y-4">
                   <SearchBox
                     onSelect={handleTermSelect}
-                    placeholder="Search for medical terms (e.g., Typhoid, Fever)..."
+                    placeholder="Search for medical terms (e.g., Dengue, Rabies)..."
                     className="w-full"
                   />
                   <p className="text-sm sm:text-base text-gray-600 leading-relaxed">
@@ -120,9 +120,8 @@ export default function TerminologyPage() {
                   <div className="mt-6 p-4 bg-blue-50 rounded-lg border border-blue-200">
                     <h4 className="font-medium text-blue-900 mb-2">Search Tips:</h4>
                     <ul className="text-sm text-blue-800 space-y-1">
-                      <li>• Try searching by disease names (e.g., "Typhoid", "Malaria")</li>
-                      <li>• Use symptoms like "Fever", "Headache", "Cough"</li>
-                      <li>• Search by body parts like "Heart", "Liver", "Kidney"</li>
+                      <li>• Try searching by disease names (e.g., "Rabies", "Tetantus")</li>
+                      <li>• Use symptoms like "Rubella", "Rotavirus", "Dengue"</li>
                     </ul>
                   </div>
                 </div>
@@ -236,7 +235,7 @@ export default function TerminologyPage() {
                 <div>
                   <h4 className="font-medium text-gray-900 mb-2">Search by Term</h4>
                   <p className="text-gray-600">
-                    Type the medical term name (e.g., "Jwara" for fever)
+                    Type the medical term name (e.g., "NAM032") for dengue
                   </p>
                 </div>
                 <div>
